@@ -1,0 +1,9 @@
+*.iml
+*.ipr
+*.iws
+build/
+AmoebamGameCore/build/
+AmoebamGameDesktop/build/
+AmoebamGameHtml5/build/
+out/
+.gradle/
