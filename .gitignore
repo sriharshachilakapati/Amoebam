@@ -5,5 +5,6 @@ build/
 AmoebamGameCore/build/
 AmoebamGameDesktop/build/
 AmoebamGameHtml5/build/
+AmoebamGameHtml5/war/
 out/
 .gradle/

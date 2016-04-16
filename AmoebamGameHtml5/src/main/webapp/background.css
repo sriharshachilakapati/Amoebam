@@ -1,0 +1,18 @@
+html {
+    background: linear-gradient(#890002, #4a0002);
+    min-height: 100vh;
+}
+
+body {
+    text-align: center;
+    background: transparent;
+}
+
+canvas {
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin:auto;
+}

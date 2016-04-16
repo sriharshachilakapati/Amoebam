@@ -27,5 +27,14 @@
     <head>
         <title>AmoebamGame</title>
         <script type="text/javascript" language="javascript" src="amoebam/amoebam.nocache.js"></script>
+
+        <script type="text/javascript" language="javascript">
+            window.onload = window.resize = function ()
+            {
+                var canvas = document.getElementsByName('canvas')[0];
+                canvas.width = window.innerWidth * .8;
+                canvas.height = window.innerHeight * .8;
+            };
+        </script>
     </head>
 </html>

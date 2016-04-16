@@ -42,4 +42,6 @@
 
     <source path='html'/>
 
+    <stylesheet src="../background.css"/>
+
 </module>
