@@ -2,6 +2,7 @@ package com.shc.ld35.amoebam;
 
 import com.shc.ld35.amoebam.entities.Amoebam;
 import com.shc.ld35.amoebam.entities.Enemy;
+import com.shc.ld35.amoebam.entities.Exit;
 import com.shc.ld35.amoebam.entities.Ground;
 import com.shc.ld35.amoebam.entities.Water;
 import com.shc.silenceengine.scene.Scene2D;
@@ -14,7 +15,7 @@ public class Level
     public int width;
     public int height;
 
-    public String levelData;
+    private String levelData;
 
     public Level(String levelData)
     {
@@ -30,10 +31,12 @@ public class Level
         int x = 0;
         int y = 0;
 
+        width = height = 0;
+
         for (String line : lines)
         {
             height++;
-            width = Math.max(width, line.length());
+            width = Math.max(width, line.trim().length());
 
             for (char c : line.toCharArray())
             {
@@ -53,6 +56,14 @@ public class Level
 
                     case 'E':
                         scene.entities.add(new Enemy(x, y));
+                        break;
+
+                    case 'e':
+                        scene.entities.add(new Enemy(x, y, true));
+                        break;
+
+                    case 'X':
+                        scene.entities.add(new Exit(x, y));
                         break;
                 }
 

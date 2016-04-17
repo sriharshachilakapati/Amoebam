@@ -2,6 +2,7 @@ package com.shc.ld35.amoebam.entities;
 
 import com.shc.ld35.amoebam.Resources;
 import com.shc.ld35.amoebam.components.AmoebamMovement;
+import com.shc.ld35.amoebam.components.PolygonUnRotate;
 import com.shc.ld35.amoebam.components.SpriteChanger;
 import com.shc.ld35.amoebam.components.SpriteRenderer;
 import com.shc.ld35.amoebam.states.PlayState;
@@ -19,6 +20,7 @@ public class Amoebam extends Entity2D
 {
     public boolean onGround;
     public boolean inJump;
+    public boolean inRoll;
 
     public Amoebam(float x, float y)
     {
@@ -29,6 +31,7 @@ public class Amoebam extends Entity2D
         addComponent(new SpriteChanger());
         addComponent(new AmoebamMovement());
         addComponent(new CollisionComponent2D(Resources.CollisionTags.AMOEBAM, new Rectangle(64, 64), this::onCollision));
+        addComponent(new PolygonUnRotate());
     }
 
     private void onCollision(Entity2D self, CollisionComponent2D otherComponent)
@@ -41,6 +44,23 @@ public class Amoebam extends Entity2D
             {
                 onGround = true;
                 position.y = otherComponent.entity.position.y - 58;
+            }
+        }
+
+        if (otherComponent.tag == Resources.CollisionTags.ENEMY)
+        {
+            PlayState.score -= 100;
+            PlayState.levelFailed = true;
+        }
+
+        if (otherComponent.tag == Resources.CollisionTags.WATER)
+        {
+            if (position.y >= otherComponent.entity.position.y + 20)
+            {
+                PlayState.score -= 100;
+                PlayState.levelFailed = true;
+
+                Resources.Sounds.EXPLOSION.play();
             }
         }
     }
@@ -58,11 +78,11 @@ public class Amoebam extends Entity2D
         if (temp.y <= GAME_HEIGHT / 2)
             temp.y = GAME_HEIGHT / 2;
 
-        if (temp.x >= PlayState.level.width * 64 - GAME_WIDTH / 2)
-            temp.x = PlayState.level.width * 64 - GAME_WIDTH / 2;
+        if (temp.x >= PlayState.currentLevel.width * 64 - GAME_WIDTH / 2)
+            temp.x = PlayState.currentLevel.width * 64 - GAME_WIDTH / 2;
 
-        if (temp.y >= PlayState.level.height * 64 - GAME_HEIGHT / 2)
-            temp.y = PlayState.level.height * 64 - GAME_HEIGHT / 2;
+        if (temp.y >= PlayState.currentLevel.height * 64 - GAME_HEIGHT / 2)
+            temp.y = PlayState.currentLevel.height * 64 - GAME_HEIGHT / 2;
 
         Resources.CAMERA.center(temp);
 

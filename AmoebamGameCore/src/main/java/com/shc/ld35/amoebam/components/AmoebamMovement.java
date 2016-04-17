@@ -1,9 +1,11 @@
 package com.shc.ld35.amoebam.components;
 
 import com.shc.ld35.amoebam.entities.Amoebam;
+import com.shc.ld35.amoebam.states.PlayState;
 import com.shc.silenceengine.input.Keyboard;
 import com.shc.silenceengine.scene.components.IComponent2D;
 import com.shc.silenceengine.scene.entity.Entity2D;
+import com.shc.silenceengine.utils.MathUtils;
 
 /**
  * @author Sri Harsha Chilakapati
@@ -27,15 +29,18 @@ public class AmoebamMovement implements IComponent2D
     @Override
     public void update(float deltaTime)
     {
+        if (!entity.inRoll)
+            entity.rotation = 0;
+
         if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || lockRight)
         {
-            entity.position.x += 250 * deltaTime;
+            entity.position.x += (entity.inRoll ? 500 : 250) * deltaTime;
             entity.scale.x = 1;
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) || lockLeft)
         {
-            entity.position.x -= 250 * deltaTime;
+            entity.position.x -= (entity.inRoll ? 500 : 250) * deltaTime;
             entity.scale.x = -1;
         }
 
@@ -76,9 +81,14 @@ public class AmoebamMovement implements IComponent2D
                 fallSpeed = 0;
                 entity.inJump = false;
             }
+
+            if (entity.position.y <= 32)
+                entity.inJump = false;
         }
 
         entity.onGround = false;
+
+        entity.position.x = MathUtils.clamp(entity.position.x, 32, PlayState.currentLevel.width * 64 - 32);
     }
 
     @Override

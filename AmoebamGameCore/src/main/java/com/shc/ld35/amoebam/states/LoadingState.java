@@ -5,6 +5,7 @@ import com.shc.ld35.amoebam.Level;
 import com.shc.ld35.amoebam.Resources;
 import com.shc.ld35.amoebam.font.Font;
 import com.shc.silenceengine.audio.AudioDevice;
+import com.shc.silenceengine.audio.openal.ALSource;
 import com.shc.silenceengine.core.GameState;
 import com.shc.silenceengine.core.SilenceEngine;
 import com.shc.silenceengine.graphics.Animation;
@@ -22,6 +23,7 @@ import com.shc.silenceengine.utils.MathUtils;
 import com.shc.silenceengine.utils.TimeUtils;
 
 import static com.shc.ld35.amoebam.AmoebamGame.*;
+import static com.shc.silenceengine.audio.AudioDevice.Constants.*;
 
 /**
  * @author Sri Harsha Chilakapati
@@ -32,7 +34,7 @@ public class LoadingState extends GameState
     private Program         program;
 
     private int numLoaded    = 0;
-    private int numResources = 15; // TODO: Increment this whenever we add a new resource
+    private int numResources = 28; // TODO: Increment this whenever we add a new resource
 
     private boolean isReady = false;
 
@@ -86,14 +88,12 @@ public class LoadingState extends GameState
 
         if (percentage == GAME_WIDTH - 40)
         {
-            GameState cutScene6 = new CutsceneState("SAVE THEM!!", 4, PlayState::new);
-            GameState cutScene5 = new CutsceneState("Your friends are being eaten!", 3, () -> cutScene6);
-            GameState cutScene4 = new CutsceneState("YOU ARE AMOEBAM", 2, () -> cutScene5);
-            GameState cutScene3 = new CutsceneState("Use the SPACE key to shoot", 3, () -> cutScene4);
-            GameState cutScene2 = new CutsceneState("Use the ARROW keys to move", 3, () -> cutScene3);
-            GameState cutScene1 = new CutsceneState("A SMALL TUTORIAL", 4, () -> cutScene2);
+            ALSource musicSource = new ALSource();
+            musicSource.attachBuffer(Resources.Sounds.MUSIC);
+            musicSource.setParameter(AL_LOOPING, true);
+            musicSource.play();
 
-            AmoebamGame.instance.setGameState(cutScene1);
+            AmoebamGame.instance.setGameState(new IntroState());
         }
     }
 
@@ -150,6 +150,8 @@ public class LoadingState extends GameState
             Resources.Animations.AMOEBAM_SMALL.addFrame(sheet.getCell(0, 5), 75, TimeUtils.Unit.MILLIS);
             Resources.Animations.AMOEBAM_SMALL.addFrame(sheet.getCell(0, 4), 50, TimeUtils.Unit.MILLIS);
 
+            Resources.Textures.AMOEBAM_ROLL = sheet.getCell(0, 6);
+
             numLoaded++;
         });
 
@@ -191,6 +193,12 @@ public class LoadingState extends GameState
             numLoaded++;
         });
 
+        imageReader.readImage(FilePath.getResourceFile("textures/logo.png"), image -> {
+            Resources.Textures.LOGO = Texture.fromImage(image);
+            image.free();
+            numLoaded++;
+        });
+
         imageReader.readImage(FilePath.getResourceFile("textures/bullet.png"), image -> {
             Resources.Textures.BULLET = Texture.fromImage(image);
             image.free();
@@ -199,6 +207,12 @@ public class LoadingState extends GameState
 
         imageReader.readImage(FilePath.getResourceFile("textures/clouds.png"), image -> {
             Resources.Textures.CLOUDS = Texture.fromImage(image);
+            image.free();
+            numLoaded++;
+        });
+
+        imageReader.readImage(FilePath.getResourceFile("textures/exit.png"), image -> {
+            Resources.Textures.EXIT = Texture.fromImage(image);
             image.free();
             numLoaded++;
         });
@@ -259,8 +273,69 @@ public class LoadingState extends GameState
             numLoaded++;
         });
 
+        fileReader.readBinaryFile(FilePath.getResourceFile("sounds/explosion.wav"), file -> {
+            SilenceEngine.audio.readToALBuffer(AudioDevice.AudioFormat.WAV, file, alBuffer -> {
+                Resources.Sounds.EXPLOSION = new ALSource();
+                Resources.Sounds.EXPLOSION.attachBuffer(alBuffer);
+            });
+            numLoaded++;
+        });
+
+        fileReader.readBinaryFile(FilePath.getResourceFile("sounds/shoot.wav"), file -> {
+            SilenceEngine.audio.readToALBuffer(AudioDevice.AudioFormat.WAV, file, alBuffer -> {
+                Resources.Sounds.SHOOT = new ALSource();
+                Resources.Sounds.SHOOT.attachBuffer(alBuffer);
+            });
+            numLoaded++;
+        });
+
         fileReader.readTextFile(FilePath.getResourceFile("levels/level1.lvl"), data -> {
             Resources.Levels.LEVEL_1 = new Level(data);
+            numLoaded++;
+        });
+
+        fileReader.readTextFile(FilePath.getResourceFile("levels/level2.lvl"), data -> {
+            Resources.Levels.LEVEL_2 = new Level(data);
+            numLoaded++;
+        });
+
+        fileReader.readTextFile(FilePath.getResourceFile("levels/level3.lvl"), data -> {
+            Resources.Levels.LEVEL_3 = new Level(data);
+            numLoaded++;
+        });
+
+        fileReader.readTextFile(FilePath.getResourceFile("levels/level4.lvl"), data -> {
+            Resources.Levels.LEVEL_4 = new Level(data);
+            numLoaded++;
+        });
+
+        fileReader.readTextFile(FilePath.getResourceFile("levels/level5.lvl"), data -> {
+            Resources.Levels.LEVEL_5 = new Level(data);
+            numLoaded++;
+        });
+
+        fileReader.readTextFile(FilePath.getResourceFile("levels/level6.lvl"), data -> {
+            Resources.Levels.LEVEL_6 = new Level(data);
+            numLoaded++;
+        });
+
+        fileReader.readTextFile(FilePath.getResourceFile("levels/level7.lvl"), data -> {
+            Resources.Levels.LEVEL_7 = new Level(data);
+            numLoaded++;
+        });
+
+        fileReader.readTextFile(FilePath.getResourceFile("levels/level8.lvl"), data -> {
+            Resources.Levels.LEVEL_8 = new Level(data);
+            numLoaded++;
+        });
+
+        fileReader.readTextFile(FilePath.getResourceFile("levels/level9.lvl"), data -> {
+            Resources.Levels.LEVEL_9 = new Level(data);
+            numLoaded++;
+        });
+
+        fileReader.readTextFile(FilePath.getResourceFile("levels/level10.lvl"), data -> {
+            Resources.Levels.LEVEL_10 = new Level(data);
             numLoaded++;
         });
     }

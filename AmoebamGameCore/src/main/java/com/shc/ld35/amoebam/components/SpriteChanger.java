@@ -21,6 +21,7 @@ public class SpriteChanger implements IComponent2D
     private Sprite jumping;
     private Sprite shootStart;
     private Sprite shootEnd;
+    private Sprite rolling;
 
     private boolean inShoot = false;
 
@@ -34,6 +35,7 @@ public class SpriteChanger implements IComponent2D
         jumping = new Sprite(Resources.Animations.AMOEBAM);
         shootStart = new Sprite(Resources.Animations.AMOEBAM_SHOOT_START);
         shootEnd = new Sprite(Resources.Animations.AMOEBAM_SHOOT_STOP);
+        rolling = new Sprite(Resources.Textures.AMOEBAM_ROLL);
 
         walking.setEndCallback(walking::start);
         jumping.setEndCallback(jumping::start);
@@ -44,6 +46,7 @@ public class SpriteChanger implements IComponent2D
             shootEnd.start();
             renderer.sprite = shootEnd;
 
+            Resources.Sounds.SHOOT.play();
             PlayState.scene.entities.add(new Bullet(this.entity.position.x + (this.entity.scale.x == 1 ? 60 : -60),
                     this.entity.position.y - 10, this.entity.scale.x == 1));
         });
@@ -53,6 +56,9 @@ public class SpriteChanger implements IComponent2D
             renderer.sprite = walking;
             inShoot = false;
         });
+
+        rolling.setStartCallback(() -> this.entity.inRoll = true);
+        rolling.setEndCallback(() -> this.entity.inRoll = false);
 
         renderer.sprite = walking;
         walking.start();
@@ -64,13 +70,21 @@ public class SpriteChanger implements IComponent2D
         if (inShoot)
             return;
 
+        if (entity.inRoll)
+            entity.rotation += (entity.scale.x == 1 ? 300 : -300) * deltaTime;
+        else
+            entity.rotation = 0;
+
         if (entity.inJump || !entity.onGround)
             changeSprite(jumping);
 
         if (!entity.inJump && entity.onGround)
             changeSprite(walking);
 
-        if (Keyboard.isKeyTapped(Keyboard.KEY_SPACE))
+        if (Keyboard.isKeyDown(Keyboard.KEY_LEFT_SHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT_SHIFT))
+            changeSprite(rolling);
+
+        if (Keyboard.isKeyTapped(Keyboard.KEY_SPACE) && !entity.inRoll)
             changeSprite(shootStart);
     }
 
@@ -89,5 +103,7 @@ public class SpriteChanger implements IComponent2D
         renderer.sprite.pause();
         renderer.sprite = sprite;
         renderer.sprite.start();
+
+        entity.inRoll = (sprite == rolling);
     }
 }

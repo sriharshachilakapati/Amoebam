@@ -2,6 +2,7 @@ package com.shc.ld35.amoebam.states;
 
 import com.shc.ld35.amoebam.AmoebamGame;
 import com.shc.ld35.amoebam.Resources;
+import com.shc.ld35.amoebam.StateProvider;
 import com.shc.silenceengine.core.GameState;
 import com.shc.silenceengine.core.SilenceEngine;
 import com.shc.silenceengine.graphics.Color;
@@ -18,7 +19,6 @@ import static com.shc.ld35.amoebam.AmoebamGame.*;
  */
 public class CutsceneState extends GameState
 {
-    private boolean autoSkip;
     private float   duration;
     private float   alpha;
     private String  text;
@@ -32,13 +32,9 @@ public class CutsceneState extends GameState
     {
         this.text = text;
         this.duration = duration;
-        autoSkip = true;
 
         if (duration == -1)
-        {
-            autoSkip = false;
             this.duration = 1;
-        }
 
         this.provider = provider;
     }
@@ -48,7 +44,7 @@ public class CutsceneState extends GameState
     {
         alpha += (decreaseAlpha ? -1 : 1) * (delta / duration) * 2;
 
-        if (!autoSkip && Keyboard.isKeyTapped(Keyboard.KEY_SPACE))
+        if (Keyboard.isKeyTapped(Keyboard.KEY_SPACE))
         {
             AmoebamGame.instance.setGameState(provider.provide());
             return;
@@ -57,7 +53,7 @@ public class CutsceneState extends GameState
         if (!decreaseAlpha && alpha >= 1f)
             decreaseAlpha = true;
 
-        if (decreaseAlpha && autoSkip && alpha <= 0f)
+        if (decreaseAlpha && alpha <= 0f)
             AmoebamGame.instance.setGameState(provider.provide());
     }
 
@@ -105,11 +101,5 @@ public class CutsceneState extends GameState
         text = this.text;
         Resources.FONT.render((GAME_WIDTH - Resources.FONT.getWidth(text)) / 2,
                 (GAME_HEIGHT - Resources.FONT.getHeight()) / 2, Color.WHITE, alpha, text);
-    }
-
-    @FunctionalInterface
-    public interface StateProvider
-    {
-        GameState provide();
     }
 }

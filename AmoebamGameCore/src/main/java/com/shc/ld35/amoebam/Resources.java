@@ -2,6 +2,7 @@ package com.shc.ld35.amoebam;
 
 import com.shc.ld35.amoebam.font.Font;
 import com.shc.silenceengine.audio.openal.ALBuffer;
+import com.shc.silenceengine.audio.openal.ALSource;
 import com.shc.silenceengine.collision.CollisionTag;
 import com.shc.silenceengine.graphics.Animation;
 import com.shc.silenceengine.graphics.cameras.OrthoCam;
@@ -16,6 +17,8 @@ import com.shc.silenceengine.math.Frustum;
 public class Resources
 {
     public static Frustum LEVEL_FRUSTUM = new Frustum();
+    public static OrthoCam CAMERA;
+    public static Font FONT;
 
     public static class Programs
     {
@@ -44,10 +47,6 @@ public class Resources
         }
     }
 
-    public static OrthoCam CAMERA;
-
-    public static Font FONT;
-
     public static class Textures
     {
         public static Texture BACKGROUND;
@@ -58,11 +57,17 @@ public class Resources
         public static Texture AMOEBAM_SHEET;
         public static Texture ENEMY_SHEET;
         public static Texture AMOEBAM_SHOOT_SHEET;
+        public static Texture LOGO;
+        public static Texture EXIT;
+        public static Texture AMOEBAM_ROLL;
     }
 
     public static class Sounds
     {
         public static ALBuffer MUSIC;
+
+        public static ALSource EXPLOSION;
+        public static ALSource SHOOT;
     }
 
     public static class Animations
@@ -81,10 +86,21 @@ public class Resources
         public static final CollisionTag AMOEBAM = new CollisionTag();
         public static final CollisionTag BULLET  = new CollisionTag();
         public static final CollisionTag ENEMY   = new CollisionTag();
+        public static final CollisionTag EXIT    = new CollisionTag();
+        public static final CollisionTag WATER   = new CollisionTag();
     }
 
     public static class Levels
     {
         public static Level LEVEL_1;
+        public static Level LEVEL_2;
+        public static Level LEVEL_3;
+        public static Level LEVEL_4;
+        public static Level LEVEL_5;
+        public static Level LEVEL_6;
+        public static Level LEVEL_7;
+        public static Level LEVEL_8;
+        public static Level LEVEL_9;
+        public static Level LEVEL_10;
     }
 }
