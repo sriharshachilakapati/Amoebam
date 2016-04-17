@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module relativePaths="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output/>
+    <orderEntry type="inheritedJdk"/>
+    <content url="file://$MODULE_DIR$/">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false"/>
+      <excludeFolder url="file://$MODULE_DIR$/build"/>
+      <excludeFolder url="file://$MODULE_DIR$/.gradle"/>
+    </content>
+    <orderEntry type="sourceFolder" forTests="false"/>
+    <orderEntry type="module" module-name="AmoebamGameCore"/>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Users/Harsha/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.0.0-SNAPSHOT/75fdc21cd3c7131dc1ceadafb6adea92c29adb17/lwjgl-3.0.0-SNAPSHOT.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES>
+          <root url="jar://C:/Users/Harsha/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.0.0-SNAPSHOT/322d5bdf49aa29b491c166b6a571ee8e97718c1a/lwjgl-3.0.0-SNAPSHOT-sources.jar!/"/>
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Users/Harsha/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-platform/3.0.0-SNAPSHOT/4f8cf33b0c9ba076fd58a1a9f6546979de2709f2/lwjgl-platform-3.0.0-SNAPSHOT-natives-windows.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES/>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Users/Harsha/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-platform/3.0.0-SNAPSHOT/5b1b2e9d71af1c48ff2816ec060f02c77e66a90f/lwjgl-platform-3.0.0-SNAPSHOT-natives-linux.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES/>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Users/Harsha/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-platform/3.0.0-SNAPSHOT/61c82a4154009d3d7bbb9ab6d4a7228e862d9477/lwjgl-platform-3.0.0-SNAPSHOT-natives-osx.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES/>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://E:/GitHub/Amoebam/libs/silenceengine.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES/>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://E:/GitHub/Amoebam/libs/silenceengine-resources.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES/>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://E:/GitHub/Amoebam/libs/backend-lwjgl.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES/>
+      </library>
+    </orderEntry>
+  </component>
+  <component name="ModuleRootManager"/>
+</module>
