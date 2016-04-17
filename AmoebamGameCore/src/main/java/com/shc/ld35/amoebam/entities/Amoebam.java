@@ -20,8 +20,6 @@ public class Amoebam extends Entity2D
     public boolean onGround;
     public boolean inJump;
 
-    public float jumpStartY;
-
     public Amoebam(float x, float y)
     {
         // Because the entity position is it's center!
@@ -54,17 +52,17 @@ public class Amoebam extends Entity2D
 
         temp.set(position);
 
-        if (temp.x < GAME_WIDTH / 2)
+        if (temp.x <= GAME_WIDTH / 2)
             temp.x = GAME_WIDTH / 2;
 
-        if (temp.y < GAME_HEIGHT / 2)
+        if (temp.y <= GAME_HEIGHT / 2)
             temp.y = GAME_HEIGHT / 2;
 
-        if (temp.x >= PlayState.level.width * 32)
-            temp.x = PlayState.level.width * 32;
+        if (temp.x >= PlayState.level.width * 64 - GAME_WIDTH / 2)
+            temp.x = PlayState.level.width * 64 - GAME_WIDTH / 2;
 
-        if (temp.y >= PlayState.level.height * 32)
-            temp.y = PlayState.level.height * 32 - 10;
+        if (temp.y >= PlayState.level.height * 64 - GAME_HEIGHT / 2)
+            temp.y = PlayState.level.height * 64 - GAME_HEIGHT / 2;
 
         Resources.CAMERA.center(temp);
 

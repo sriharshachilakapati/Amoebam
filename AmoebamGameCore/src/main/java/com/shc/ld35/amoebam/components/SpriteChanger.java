@@ -2,6 +2,8 @@ package com.shc.ld35.amoebam.components;
 
 import com.shc.ld35.amoebam.Resources;
 import com.shc.ld35.amoebam.entities.Amoebam;
+import com.shc.ld35.amoebam.entities.Bullet;
+import com.shc.ld35.amoebam.states.PlayState;
 import com.shc.silenceengine.graphics.Sprite;
 import com.shc.silenceengine.input.Keyboard;
 import com.shc.silenceengine.scene.components.IComponent2D;
@@ -28,8 +30,8 @@ public class SpriteChanger implements IComponent2D
         this.entity = (Amoebam) entity;
         renderer = entity.getComponent(SpriteRenderer.class);
 
-        walking = new Sprite(Resources.Animations.AMOEBAM_SMALL_WALK);
-        jumping = new Sprite(Resources.Animations.AMOEBAM_WALK);
+        walking = new Sprite(Resources.Animations.AMOEBAM_SMALL);
+        jumping = new Sprite(Resources.Animations.AMOEBAM);
         shootStart = new Sprite(Resources.Animations.AMOEBAM_SHOOT_START);
         shootEnd = new Sprite(Resources.Animations.AMOEBAM_SHOOT_STOP);
 
@@ -41,6 +43,9 @@ public class SpriteChanger implements IComponent2D
         shootStart.setEndCallback(() -> {
             shootEnd.start();
             renderer.sprite = shootEnd;
+
+            PlayState.scene.entities.add(new Bullet(this.entity.position.x + (this.entity.scale.x == 1 ? 60 : -60),
+                    this.entity.position.y - 10, this.entity.scale.x == 1));
         });
 
         shootEnd.setEndCallback(() -> {
@@ -69,13 +74,6 @@ public class SpriteChanger implements IComponent2D
             changeSprite(shootStart);
     }
 
-    private void changeSprite(Sprite sprite)
-    {
-        renderer.sprite.pause();
-        renderer.sprite = sprite;
-        renderer.sprite.start();
-    }
-
     @Override
     public void render(float deltaTime)
     {
@@ -84,5 +82,12 @@ public class SpriteChanger implements IComponent2D
     @Override
     public void dispose()
     {
+    }
+
+    private void changeSprite(Sprite sprite)
+    {
+        renderer.sprite.pause();
+        renderer.sprite = sprite;
+        renderer.sprite.start();
     }
 }

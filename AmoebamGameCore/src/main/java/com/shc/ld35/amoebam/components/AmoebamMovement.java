@@ -28,10 +28,16 @@ public class AmoebamMovement implements IComponent2D
     public void update(float deltaTime)
     {
         if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || lockRight)
+        {
             entity.position.x += 250 * deltaTime;
+            entity.scale.x = 1;
+        }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) || lockLeft)
+        {
             entity.position.x -= 250 * deltaTime;
+            entity.scale.x = -1;
+        }
 
         if (entity.onGround)
             lockLeft = lockRight = false;
@@ -42,7 +48,10 @@ public class AmoebamMovement implements IComponent2D
             lockRight = Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
 
             if (!lockLeft && !lockRight)
+            {
                 lockLeft = lockRight = true;
+                entity.scale.x = 1;
+            }
 
             entity.inJump = true;
             entity.position.y -= 5;
@@ -55,7 +64,7 @@ public class AmoebamMovement implements IComponent2D
             fallSpeed += 10;
 
             if (fallSpeed >= 500)
-                fallSpeed = 0;
+                fallSpeed = 500;
         }
         else
         {

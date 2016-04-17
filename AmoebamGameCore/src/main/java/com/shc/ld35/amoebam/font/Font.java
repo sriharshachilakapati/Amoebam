@@ -68,6 +68,11 @@ public class Font
 
     public void render(int x, int y, Color color, String string)
     {
+        render(x, y, color, 1, string);
+    }
+
+    public void render(int x, int y, Color color, float alpha, String string)
+    {
         Program program = Resources.Programs.FONT_PROGRAM;
         program.use();
 
@@ -77,6 +82,7 @@ public class Font
         Resources.CAMERA.apply();
         program.setUniform("proj", Resources.CAMERA.getProjection());
         program.setUniform("fontTexture", 0);
+        program.setUniform("alpha", alpha);
 
         DynamicRenderer renderer = AmoebamGame.fontRenderer;
         renderer.setVertexLocation(program.getAttribute("position"));

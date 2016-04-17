@@ -47,6 +47,12 @@ public class SpriteRenderer implements IComponent2D
 
         if (!useView)
             this.useBatch = false;
+
+        if (sprite != null)
+        {
+            sprite.setEndCallback(sprite::start);
+            sprite.start();
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.shc.ld35.amoebam.AmoebamGame;
 import com.shc.ld35.amoebam.Level;
 import com.shc.ld35.amoebam.Resources;
 import com.shc.ld35.amoebam.entities.Clouds;
+import com.shc.silenceengine.audio.openal.ALSource;
 import com.shc.silenceengine.collision.broadphase.DynamicTree2D;
 import com.shc.silenceengine.collision.colliders.SceneCollider2D;
 import com.shc.silenceengine.core.GameState;
@@ -17,18 +18,19 @@ import com.shc.silenceengine.math.Matrix4;
 import com.shc.silenceengine.scene.Scene2D;
 
 import static com.shc.ld35.amoebam.AmoebamGame.*;
+import static com.shc.silenceengine.audio.AudioDevice.Constants.*;
 
 /**
  * @author Sri Harsha Chilakapati
  */
 public class PlayState extends GameState
 {
-    public static Level level;
+    public static Level   level;
+    public static Scene2D scene;
 
-    private Scene2D scene;
-    private Matrix4 background;
-
+    private Matrix4         background;
     private SceneCollider2D collider;
+    private ALSource        musicSource;
 
     @Override
     public void onEnter()
@@ -46,24 +48,29 @@ public class PlayState extends GameState
         program.use();
 
         scene = new Scene2D();
+
+        level = Resources.Levels.LEVEL_1;
+        level.create(scene);
+
         scene.entities.add(new Clouds(0));
         scene.entities.add(new Clouds(GAME_WIDTH / 2));
         scene.entities.add(new Clouds(GAME_WIDTH));
-
-        level = new Level(scene, "levels/level1.lvl");
 
         collider = new SceneCollider2D(new DynamicTree2D());
         collider.setScene(scene);
 
         collider.register(Resources.CollisionTags.AMOEBAM, Resources.CollisionTags.GROUND);
+        collider.register(Resources.CollisionTags.ENEMY, Resources.CollisionTags.BULLET);
+
+        musicSource = new ALSource();
+        musicSource.attachBuffer(Resources.Sounds.MUSIC);
+        musicSource.setParameter(AL_LOOPING, true);
+        musicSource.play();
     }
 
     @Override
     public void update(float delta)
     {
-        if (!level.loaded)
-            return;
-
         scene.update(delta);
         collider.checkCollisions();
 
@@ -78,9 +85,6 @@ public class PlayState extends GameState
     @Override
     public void render(float delta)
     {
-        if (!level.loaded)
-            return;
-
         DynamicRenderer renderer = AmoebamGame.spriteRenderer;
         Texture texture = Resources.Textures.BACKGROUND;
         texture.bind(0);
@@ -123,5 +127,7 @@ public class PlayState extends GameState
     @Override
     public void onLeave()
     {
+        musicSource.stop();
+        musicSource.dispose();
     }
 }

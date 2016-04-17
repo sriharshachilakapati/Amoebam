@@ -1,6 +1,7 @@
 package com.shc.ld35.amoebam;
 
 import com.shc.ld35.amoebam.font.Font;
+import com.shc.silenceengine.audio.openal.ALBuffer;
 import com.shc.silenceengine.collision.CollisionTag;
 import com.shc.silenceengine.graphics.Animation;
 import com.shc.silenceengine.graphics.cameras.OrthoCam;
@@ -52,29 +53,38 @@ public class Resources
         public static Texture BACKGROUND;
         public static Texture CLOUDS;
         public static Texture GROUND;
+        public static Texture BULLET;
         public static Texture BLOCKS_SHEET;
         public static Texture AMOEBAM_SHEET;
+        public static Texture ENEMY_SHEET;
         public static Texture AMOEBAM_SHOOT_SHEET;
     }
 
     public static class Sounds
     {
-
+        public static ALBuffer MUSIC;
     }
 
     public static class Animations
     {
-        public static Animation AMOEBAM_WALK;
-        public static Animation AMOEBAM_SMALL_WALK;
+        public static Animation AMOEBAM;
+        public static Animation AMOEBAM_SMALL;
         public static Animation WATER;
         public static Animation AMOEBAM_SHOOT_START;
         public static Animation AMOEBAM_SHOOT_STOP;
+        public static Animation ENEMY;
     }
 
     public static class CollisionTags
     {
         public static final CollisionTag GROUND  = new CollisionTag();
         public static final CollisionTag AMOEBAM = new CollisionTag();
-        public static final CollisionTag WATER   = new CollisionTag();
+        public static final CollisionTag BULLET  = new CollisionTag();
+        public static final CollisionTag ENEMY   = new CollisionTag();
+    }
+
+    public static class Levels
+    {
+        public static Level LEVEL_1;
     }
 }
